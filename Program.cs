@@ -9,23 +9,34 @@ namespace SnakeAndLadder
         public const int NO_PLAY = 0;
         public const int SNAKE = 1;
         public const int LADDER = 2;
+
         static void Main(string[] args)
         {
-            Console.WriteLine(" \nEnter player name");
+            Console.WriteLine("Hello Welcome To Snake And Lader Problem \nEnter player name");
             string player1 = Console.ReadLine();
-            int playerPosition = START_POINT;
-            int diceRoll = RollDice();
-            Console.WriteLine("Dice Roll : " + diceRoll);
-            playerPosition = PlayerMovement(diceRoll, playerPosition);
-            Console.WriteLine("Your Position: " + playerPosition);
+            int playerCurrentPosition = START_POINT;
+            for (int noOfTimesDiceRolled = 1; playerCurrentPosition >= 0; noOfTimesDiceRolled++)
+            {
+                int diceRoll = DiceRoll();
+                Console.WriteLine("You rolled: " + diceRoll);
+                playerCurrentPosition = PlayerMovement(diceRoll, playerCurrentPosition);
+                Console.WriteLine("Your position Number is : " + playerCurrentPosition);
+                if (playerCurrentPosition >= 100)
+                {
+                    Console.WriteLine("Game Over");
+                    break;
+                }
+                Console.ReadLine();
+            }
         }
-        static int RollDice()
+        static int DiceRoll()
         {
             Random random = new Random();
             int diceNum = random.Next(1, 7);
             return diceNum;
         }
-        static int PlayerMovement(int numberRolled, int playerPosition)
+
+        static int PlayerMovement(int numbRolled, int postionPlayer)
         {
             Random random = new Random();
             int move = random.Next(0, 3);
@@ -35,15 +46,23 @@ namespace SnakeAndLadder
                     Console.WriteLine("No Play");
                     break;
                 case SNAKE:
-                    Console.WriteLine("Snake");
-                    playerPosition = playerPosition - numberRolled;
-                    break;
+                    Console.WriteLine("You Are Bitten by Snake");
+                    if (postionPlayer - numbRolled >= 0)
+                    {
+                        postionPlayer = postionPlayer - numbRolled;
+                        break;
+                    }
+                    else
+                    {
+                        postionPlayer = START_POINT;
+                        break;
+                    }
                 case LADDER:
-                    Console.WriteLine("Ladder");
-                    playerPosition = playerPosition + numberRolled;
+                    Console.WriteLine("You Got Ladder");
+                    postionPlayer = postionPlayer + numbRolled;
                     break;
             }
-            return playerPosition;
+            return postionPlayer;
         }
     }
 }
