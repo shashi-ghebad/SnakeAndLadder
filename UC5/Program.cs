@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SnakeAndLadder
+namespace SnakeAndLader
 {
     class Program
     {
